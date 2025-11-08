@@ -12,147 +12,133 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Landing - King Thimbles</title>
+  <title>King Thimbles</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+
   <style>
-    /* Небольшие стили для тени и центрирования */
-    body { background: #ffffff; }
-    .card-shadow { box-shadow: 0 20px 40px rgba(10,10,10,0.08); }
-    .glass { background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(250,250,252,0.9)); }
-    .blur-text { text-shadow: 0 6px 12px rgba(0,0,0,0.08); }
-    .play-btn { width:72px; height:72px; border-radius:9999px; display:flex; align-items:center; justify-content:center; }
+    body {
+      background-color: #1c1812;
+      background-image: 
+        linear-gradient(180deg, rgba(28,24,18,0.95), rgba(40,33,23,0.95)),
+        url('https://i.ibb.co/0YVj6Sw/stone-bg-texture.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      color: #f5e8c7;
+      font-family: 'Cinzel', serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .card-shadow { box-shadow: 0 15px 35px rgba(0,0,0,0.45); }
+    .heading { text-shadow: 0 3px 8px rgba(0,0,0,0.5); letter-spacing: 1px; }
+    .ruby { color: #b0122f; }
+    .gold { color: #c79a2e; }
+    .btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 16px;
+      font-weight: 700;
+      border-radius: 10px;
+      transition: all .25s ease;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    }
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
+    .btn-gold { background: linear-gradient(180deg, #f8e6a8 0%, #c79a2e 55%, #a07719 100%); color: #111; }
+    .btn-ruby { background: linear-gradient(180deg, #e4374d 0%, #b0122f 60%, #7c0f23 100%); color: #fff; }
   </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-6">
-  <div class="w-full max-w-md">
+<body>
+  <div class="w-full max-w-md mx-auto flex flex-col items-center gap-8">
 
-   <!-- ========== CONFIG - правь здесь через GitHub web UI ========== -->
-<script>
-  // EDIT HERE: настройте тексты, цвета, пути к файлам
-  window.__CONFIG = {
-    logo: './logo.png',            // Путь к логотипу
-    heading: 'INSTRUCCIONES',      // Заголовок страницы
-    description: '¡Bienvenido al juego King Thimbles!',  // Описание
-    videoUrl: 'https://www.youtube.com/watch?v=XXXX',  // Ссылка на видео (если есть)
-    buttonText: 'Jugar en KING THIMBLES',  // Текст на кнопке
-    buttonLink: 'https://example.com',  // Ссылка на игру
-    primaryColor: '#d49e28',        // Цвет кнопки (золотой)
-    
-    // Дополнительные стили для страницы
-    headingStyle: {
-      fontFamily: 'Montserrat, sans-serif', // Шрифт для заголовка
-      fontWeight: '600', // Жирный шрифт
-      fontSize: '48px', // Размер шрифта
-      color: '#ffffff', // Белый цвет текста
-      textShadow: '2px 2px 10px rgba(0, 0, 0, 0.2)', // Тень для текста
-      textAlign: 'center' // Выравнивание по центру
-    },
-    backgroundStyle: {
-      background: 'linear-gradient(135deg, #b7312c, #d49e28)', // Красно-золотой градиент
-      color: '#fff' // Белый цвет текста на темном фоне
-    }
-  }
-</script>
+    <!-- ========== CONFIG - правь здесь через GitHub web UI ========== -->
+    <script>
+      window.__CONFIG = {
+        logo: './logo.png',                        // Круглое фото
+        heading: 'INSTRUCCIONES',                  // Заголовок
+        headingColor: '#b0122f',                   // Бордово-красный цвет
+        videoUrl: '',                              // Ссылка на видео (или оставь пустым)
+        button1Text: 'JUGAR EN KING THIMBLES',     // Первая кнопка
+        button1Link: 'https://example.com',         // Ссылка на игру
+        button2Text: 'CANAL DE TELEGRAM | SORTEO DE 500$', // Вторая кнопка
+        button2Link: 'https://t.me/xxxxx',         // Ссылка на канал
+        theme: 'castle'                            // фон и стиль (можно не менять)
+      };
+    </script>
     <!-- ============================================================ -->
 
-    <div class="flex flex-col items-center gap-6">
-      <!-- Logo -->
-      <div class="w-36 h-36 rounded-full overflow-hidden bg-white card-shadow flex items-center justify-center">
-        <img id="logoImg" src="" alt="logo" class="object-cover w-full h-full" />
-      </div>
+    <!-- ЛОГО -->
+    <div class="w-36 h-36 rounded-full overflow-hidden bg-white card-shadow">
+      <img id="logoImg" src="" alt="logo" class="object-cover w-full h-full" />
+    </div>
 
-      <!-- Heading -->
-      <h1 id="heading" class="text-2xl font-semibold tracking-wide blur-text" style="letter-spacing:1px"></h1>
+    <!-- ЗАГОЛОВОК -->
+    <h1 id="heading" class="text-3xl font-bold heading text-center"></h1>
 
-      <!-- Video card -->
-      <div class="w-full bg-white rounded-2xl p-6 card-shadow glass">
-        <div id="videoArea" class="relative flex items-center justify-center h-48 rounded-lg overflow-hidden">
-          <!-- Placeholder or poster -->
-          <div id="videoPlaceholder" class="absolute inset-0 flex items-center justify-center">
-            <button id="openVideo" class="play-btn bg-gray-200 hover:scale-105 transition-transform">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-gray-600" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            </button>
-          </div>
+    <!-- ВИДЕО -->
+    <div class="w-full bg-[#2a241b]/70 rounded-xl p-4 card-shadow">
+      <div id="videoArea" class="relative flex items-center justify-center h-48 rounded-lg overflow-hidden">
+        <div id="videoPlaceholder" class="absolute inset-0 flex items-center justify-center">
+          <button id="openVideo" class="w-16 h-16 bg-[#c79a2e]/90 rounded-full flex items-center justify-center hover:scale-105 transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </button>
         </div>
       </div>
-
-      <!-- Link button -->
-      <a id="cta" class="w-full block text-center py-4 rounded-xl text-white font-medium shadow-md" href="#" target="_blank" rel="noopener noreferrer">CTA</a>
-
     </div>
+
+    <!-- КНОПКИ -->
+    <a id="btn1" href="#" target="_blank" class="btn btn-gold"></a>
+    <a id="btn2" href="#" target="_blank" class="btn btn-ruby"></a>
   </div>
 
-  <!-- Modal для видео -->
-  <div id="modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-50">
+  <!-- МОДАЛ ВИДЕО -->
+  <div id="modal" class="fixed inset-0 hidden items-center justify-center bg-black bg-opacity-60 z-50">
     <div class="w-full max-w-3xl mx-4">
-      <div class="bg-white rounded-lg overflow-hidden">
-        <div class="relative pb-[56.25%]"> <!-- 16:9 -->
+      <div class="bg-black rounded-lg overflow-hidden">
+        <div class="relative pb-[56.25%]">
           <div id="modalContent" class="absolute inset-0"></div>
         </div>
-        <div class="p-4 text-right">
-          <button id="closeModal" class="px-3 py-1 rounded bg-gray-100">Cerrar</button>
+        <div class="p-3 text-right">
+          <button id="closeModal" class="px-3 py-1 bg-[#c79a2e]/90 rounded">Cerrar</button>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- JS для инициализации -->
   <script>
-    // Init UI from CONFIG
-    const cfg = window.__CONFIG || {};
-    const logoImg = document.getElementById('logoImg');
+    const cfg = window.__CONFIG;
+    document.getElementById('logoImg').src = cfg.logo;
     const heading = document.getElementById('heading');
-    const cta = document.getElementById('cta');
+    heading.innerText = cfg.heading;
+    heading.style.color = cfg.headingColor;
+    document.getElementById('btn1').innerText = cfg.button1Text;
+    document.getElementById('btn1').href = cfg.button1Link;
+    document.getElementById('btn2').innerText = cfg.button2Text;
+    document.getElementById('btn2').href = cfg.button2Link;
+
     const openVideo = document.getElementById('openVideo');
-    const videoArea = document.getElementById('videoArea');
     const modal = document.getElementById('modal');
     const modalContent = document.getElementById('modalContent');
     const closeModal = document.getElementById('closeModal');
 
-    logoImg.src = cfg.logo || '';
-    heading.innerText = cfg.heading || '';
-    cta.innerText = cfg.buttonText || 'Jugar';
-    cta.href = cfg.buttonLink || '#';
-    cta.style.background = cfg.primaryColor || '#7c3aed';
-
-    // Если задано описание — можно добавить под заголовком
-    if (cfg.description) {
-      const p = document.createElement('p');
-      p.className = 'text-sm text-gray-600 text-center';
-      p.innerText = cfg.description;
-      heading.insertAdjacentElement('afterend', p);
-    }
-
-    function isYouTube(url){ return /youtube.com|youtu.be/.test(url); }
-
     openVideo.addEventListener('click', ()=>{
-      const url = cfg.videoUrl || '';
-      if (!url) { alert('Видео не задано. Загрузите файл video.mp4 в репозиторий и впишите ./video.mp4 в CONFIG.'); return; }
-      modalContent.innerHTML = '';
-      if (isYouTube(url)) {
-        // Преобразование к embed
-        let id = '';
-        try {
-          const u = new URL(url);
-          if (u.hostname.includes('youtu.be')) id = u.pathname.slice(1);
-          else id = u.searchParams.get('v');
-        } catch(e) { id = url; }
-        modalContent.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1" frameborder="0" allowfullscreen class="w-full h-full"></iframe>`;
-      } else {
-        // HTML5 video
-        modalContent.innerHTML = `<video controls autoplay class="w-full h-full" src="${url}"></video>`;
-      }
+      const url = cfg.videoUrl;
+      if(!url){ alert('Видео пока не добавлено.'); return; }
+      modalContent.innerHTML = `<iframe src="${url.replace('watch?v=', 'embed/')}" frameborder="0" allowfullscreen class="w-full h-full"></iframe>`;
       modal.classList.remove('hidden');
       modal.classList.add('flex');
     });
-
     closeModal.addEventListener('click', ()=>{
       modal.classList.add('hidden');
-      modal.classList.remove('flex');
       modalContent.innerHTML = '';
     });
-
-    // Клик вне модала — закрыть
-    modal.addEventListener('click', (e)=>{ if (e.target === modal) closeModal.click(); });
+    modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal.click(); });
   </script>
 </body>
 </html>

@@ -26,20 +26,33 @@
 <body class="min-h-screen flex items-center justify-center p-6">
   <div class="w-full max-w-md">
 
-    <!-- ========== CONFIG - правь здесь через GitHub web UI ========== -->
-    <script>
-      // EDIT HERE: настройте тексты, цвета, пути к файлам
-      window.__CONFIG = {
-        logo: './logo.png',            // путь к круглому лого в репозитории
-        heading: 'INSTRUCCIONES',     // заголовок
-        description: '',               // если нужно краткое описание
-        // Поддержка видео: mp4 файл или YouTube ссылка
-        videoUrl: '',                  // пример: './video.mp4' или 'https://www.youtube.com/watch?v=XXXX'
-        buttonText: 'Jugar en KING THIMBLES',
-        buttonLink: 'https://example.com',
-        primaryColor: '#7c3aed'        // цвет кнопки (можно hex)
-      };
-    </script>
+   <!-- ========== CONFIG - правь здесь через GitHub web UI ========== -->
+<script>
+  // EDIT HERE: настройте тексты, цвета, пути к файлам
+  window.__CONFIG = {
+    logo: './logo.png',            // путь к круглому лого в репозитории
+    heading: 'INSTRUCCIONES',     // заголовок
+    description: '¡Bienvenido al juego King Thimbles!',  // краткое описание
+    videoUrl: '',                  // пример: './video.mp4' или 'https://www.youtube.com/watch?v=XXXX'
+    buttonText: 'Jugar en KING THIMBLES',  // текст на кнопке
+    buttonLink: 'https://example.com',  // ссылка на игру
+    primaryColor: '#d49e28',        // цвет кнопки (золотой цвет)
+    
+    // Дополнительные стили для страницы
+    headingStyle: {
+      fontFamily: 'Montserrat, sans-serif', // шрифт для заголовка
+      fontWeight: '600', // жирный шрифт
+      fontSize: '48px', // размер шрифта
+      color: '#ffffff', // белый цвет текста
+      textShadow: '2px 2px 10px rgba(0, 0, 0, 0.2)', // тень для текста
+      textAlign: 'center' // выравнивание по центру
+    },
+    backgroundStyle: {
+      background: 'linear-gradient(135deg, #b7312c, #d49e28)', // красно-золотой градиент
+      color: '#fff' // белый цвет текста на темном фоне
+    }
+  }
+</script>
     <!-- ============================================================ -->
 
     <div class="flex flex-col items-center gap-6">

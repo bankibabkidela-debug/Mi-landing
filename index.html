@@ -1,0 +1,145 @@
+<!--
+ВНИМАНИЕ: Это одностраничный шаблон (HTML) — кладёшь файл в корень репозитория и разворачиваешь на Vercel как статический сайт.
+Как редактировать (быстро, без git): зайди в GitHub → открой файл vercel-landing-template.html → Edit (карандаш) → измени значения в блоке `// CONFIG` ниже → Commit.
+
+ФАЙЛЫ: логотип и видео можно положить рядом с этим файлом в репе (например logo.png и video.mp4), затем в CONFIG указать их имена.
+
+Поддержка видео: если в videoUrl указать прямую ссылку на MP4 — будет HTML5-плеер, если это YouTube-ссылка — будет встроенный iframe.
+-->
+
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Landing - King Thimbles</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Небольшие стили для тени и центрирования */
+    body { background: #ffffff; }
+    .card-shadow { box-shadow: 0 20px 40px rgba(10,10,10,0.08); }
+    .glass { background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(250,250,252,0.9)); }
+    .blur-text { text-shadow: 0 6px 12px rgba(0,0,0,0.08); }
+    .play-btn { width:72px; height:72px; border-radius:9999px; display:flex; align-items:center; justify-content:center; }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-6">
+  <div class="w-full max-w-md">
+
+    <!-- ========== CONFIG - правь здесь через GitHub web UI ========== -->
+    <script>
+      // EDIT HERE: настройте тексты, цвета, пути к файлам
+      window.__CONFIG = {
+        logo: './logo.png',            // путь к круглому лого в репозитории
+        heading: 'INSTRUCCIONES',     // заголовок
+        description: '',               // если нужно краткое описание
+        // Поддержка видео: mp4 файл или YouTube ссылка
+        videoUrl: '',                  // пример: './video.mp4' или 'https://www.youtube.com/watch?v=XXXX'
+        buttonText: 'Jugar en KING THIMBLES',
+        buttonLink: 'https://example.com',
+        primaryColor: '#7c3aed'        // цвет кнопки (можно hex)
+      };
+    </script>
+    <!-- ============================================================ -->
+
+    <div class="flex flex-col items-center gap-6">
+      <!-- Logo -->
+      <div class="w-36 h-36 rounded-full overflow-hidden bg-white card-shadow flex items-center justify-center">
+        <img id="logoImg" src="" alt="logo" class="object-cover w-full h-full" />
+      </div>
+
+      <!-- Heading -->
+      <h1 id="heading" class="text-2xl font-semibold tracking-wide blur-text" style="letter-spacing:1px"></h1>
+
+      <!-- Video card -->
+      <div class="w-full bg-white rounded-2xl p-6 card-shadow glass">
+        <div id="videoArea" class="relative flex items-center justify-center h-48 rounded-lg overflow-hidden">
+          <!-- Placeholder or poster -->
+          <div id="videoPlaceholder" class="absolute inset-0 flex items-center justify-center">
+            <button id="openVideo" class="play-btn bg-gray-200 hover:scale-105 transition-transform">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-gray-600" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Link button -->
+      <a id="cta" class="w-full block text-center py-4 rounded-xl text-white font-medium shadow-md" href="#" target="_blank" rel="noopener noreferrer">CTA</a>
+
+    </div>
+  </div>
+
+  <!-- Modal для видео -->
+  <div id="modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-50">
+    <div class="w-full max-w-3xl mx-4">
+      <div class="bg-white rounded-lg overflow-hidden">
+        <div class="relative pb-[56.25%]"> <!-- 16:9 -->
+          <div id="modalContent" class="absolute inset-0"></div>
+        </div>
+        <div class="p-4 text-right">
+          <button id="closeModal" class="px-3 py-1 rounded bg-gray-100">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Init UI from CONFIG
+    const cfg = window.__CONFIG || {};
+    const logoImg = document.getElementById('logoImg');
+    const heading = document.getElementById('heading');
+    const cta = document.getElementById('cta');
+    const openVideo = document.getElementById('openVideo');
+    const videoArea = document.getElementById('videoArea');
+    const modal = document.getElementById('modal');
+    const modalContent = document.getElementById('modalContent');
+    const closeModal = document.getElementById('closeModal');
+
+    logoImg.src = cfg.logo || '';
+    heading.innerText = cfg.heading || '';
+    cta.innerText = cfg.buttonText || 'Jugar';
+    cta.href = cfg.buttonLink || '#';
+    cta.style.background = cfg.primaryColor || '#7c3aed';
+
+    // Если задано описание — можно добавить под заголовком
+    if (cfg.description) {
+      const p = document.createElement('p');
+      p.className = 'text-sm text-gray-600 text-center';
+      p.innerText = cfg.description;
+      heading.insertAdjacentElement('afterend', p);
+    }
+
+    function isYouTube(url){ return /youtube.com|youtu.be/.test(url); }
+
+    openVideo.addEventListener('click', ()=>{
+      const url = cfg.videoUrl || '';
+      if (!url) { alert('Видео не задано. Загрузите файл video.mp4 в репозиторий и впишите ./video.mp4 в CONFIG.'); return; }
+      modalContent.innerHTML = '';
+      if (isYouTube(url)) {
+        // Преобразование к embed
+        let id = '';
+        try {
+          const u = new URL(url);
+          if (u.hostname.includes('youtu.be')) id = u.pathname.slice(1);
+          else id = u.searchParams.get('v');
+        } catch(e) { id = url; }
+        modalContent.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1" frameborder="0" allowfullscreen class="w-full h-full"></iframe>`;
+      } else {
+        // HTML5 video
+        modalContent.innerHTML = `<video controls autoplay class="w-full h-full" src="${url}"></video>`;
+      }
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    });
+
+    closeModal.addEventListener('click', ()=>{
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      modalContent.innerHTML = '';
+    });
+
+    // Клик вне модала — закрыть
+    modal.addEventListener('click', (e)=>{ if (e.target === modal) closeModal.click(); });
+  </script>
+</body>
+</html>
